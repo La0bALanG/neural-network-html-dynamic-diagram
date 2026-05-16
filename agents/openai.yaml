@@ -1,0 +1,7 @@
+interface:
+  display_name: "Neural Network HTML Dynamic Diagram"
+  short_description: "生成神经网络算法的 HTML 动态图示"
+  default_prompt: "Use $neural-network-html-dynamic-diagram to create an animated HTML diagram for a neural-network algorithm."
+
+policy:
+  allow_implicit_invocation: true

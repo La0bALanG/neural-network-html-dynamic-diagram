@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>__DIAGRAM_TITLE__</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172033;
+      --muted: #65728a;
+      --panel: #ffffff;
+      --line: #d6dfed;
+      --blue: #2563eb;
+      --green: #208a4d;
+      --amber: #c47b12;
+      --purple: #7655d8;
+      --shadow: rgba(38, 54, 82, 0.16);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #f8fbff, #eef4fb);
+      color: var(--ink);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    }
+
+    .page {
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 18px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 250px;
+    }
+
+    button {
+      min-height: 38px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      box-shadow: 0 8px 22px var(--shadow);
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 18px 56px var(--shadow);
+      overflow: hidden;
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .info {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: #fbfdff;
+    }
+
+    .phase-title {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 22px;
+    }
+
+    .phase-note {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .diagram-wrap {
+      min-width: 0;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    svg {
+      display: block;
+      width: 900px;
+      height: 420px;
+    }
+
+    .node {
+      fill: #eef6ff;
+      stroke: var(--blue);
+      stroke-width: 2;
+    }
+
+    .node.active {
+      fill: #fff5db;
+      stroke: var(--amber);
+    }
+
+    .edge {
+      fill: none;
+      stroke: #667085;
+      stroke-width: 3;
+      marker-end: url("#arrow");
+      opacity: 0.35;
+    }
+
+    .edge.active {
+      stroke: var(--amber);
+      opacity: 1;
+      stroke-dasharray: 12 10;
+      animation: flow 900ms linear infinite;
+    }
+
+    @keyframes flow {
+      to { stroke-dashoffset: -44; }
+    }
+
+    .label {
+      fill: var(--ink);
+      font-size: 16px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+
+    @media (max-width: 860px) {
+      header,
+      .stage {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+      }
+
+      .controls {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>__DIAGRAM_TITLE__</h1>
+        <p class="subtitle">Replace this starter with algorithm-specific phases, equations, tensors, and animated data flow.</p>
+      </div>
+      <div class="controls">
+        <button id="playBtn" type="button">暂停</button>
+        <button id="prevBtn" type="button">上一步</button>
+        <button id="nextBtn" type="button">下一步</button>
+        <button id="resetBtn" type="button">重置</button>
+      </div>
+    </header>
+
+    <main class="panel stage">
+      <aside class="info">
+        <h2 class="phase-title" id="phaseTitle"></h2>
+        <p class="phase-note" id="phaseNote"></p>
+      </aside>
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 900 420" role="img" aria-label="Dynamic neural-network diagram">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#667085"></path>
+            </marker>
+          </defs>
+          <path class="edge" id="edge1" d="M 230 210 H 430"></path>
+          <path class="edge" id="edge2" d="M 530 210 H 730"></path>
+          <rect class="node" id="node0" x="80" y="155" width="150" height="110" rx="8"></rect>
+          <rect class="node" id="node1" x="430" y="155" width="150" height="110" rx="8"></rect>
+          <rect class="node" id="node2" x="730" y="155" width="120" height="110" rx="8"></rect>
+          <text class="label" x="155" y="210">Input</text>
+          <text class="label" x="505" y="210">Operation</text>
+          <text class="label" x="790" y="210">Output</text>
+        </svg>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const phases = [
+      { title: "Input", note: "Introduce the input tensor, token, state, or signal." },
+      { title: "Core Operation", note: "Animate the main computation and highlight its formula." },
+      { title: "Output", note: "Show the resulting tensor/state and where it flows next." }
+    ];
+
+    const state = { step: 0, playing: true, last: performance.now() };
+    const phaseTitle = document.getElementById("phaseTitle");
+    const phaseNote = document.getElementById("phaseNote");
+    const playBtn = document.getElementById("playBtn");
+
+    function render() {
+      const step = state.step % phases.length;
+      phaseTitle.textContent = phases[step].title;
+      phaseNote.textContent = phases[step].note;
+      playBtn.textContent = state.playing ? "暂停" : "播放";
+      document.querySelectorAll(".node").forEach((node, index) => {
+        node.classList.toggle("active", index === step);
+      });
+      document.querySelectorAll(".edge").forEach((edge, index) => {
+        edge.classList.toggle("active", index === step - 1);
+      });
+    }
+
+    function setStep(step, keepPlaying = state.playing) {
+      state.step = (step + phases.length) % phases.length;
+      state.playing = keepPlaying;
+      state.last = performance.now();
+      render();
+    }
+
+    document.getElementById("playBtn").addEventListener("click", () => {
+      state.playing = !state.playing;
+      state.last = performance.now();
+      render();
+    });
+    document.getElementById("prevBtn").addEventListener("click", () => setStep(state.step - 1, false));
+    document.getElementById("nextBtn").addEventListener("click", () => setStep(state.step + 1, false));
+    document.getElementById("resetBtn").addEventListener("click", () => setStep(0, true));
+
+    function tick(now) {
+      if (state.playing && now - state.last > 1400) setStep(state.step + 1, true);
+      requestAnimationFrame(tick);
+    }
+
+    render();
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>
